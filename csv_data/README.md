@@ -1,5 +1,5 @@
 # CSV_data
-category : coupang 내 카테고리
+category : coupang 내 카테고리 /
 manufacuturer : 제품 제조사명
 product : 제품명
 name : 리뷰 작성자이름
