@@ -1,4 +1,5 @@
 # CSV_data
+## column 설명
 category : coupang 내 카테고리  
 manufacuturer : 제품 제조사명  
 product : 제품명  
@@ -11,3 +12,8 @@ review_len : 리뷰 길이
 special_char_count : 쉼표(,), 마침표(.)를 제외한 특수문자 개수  
 manufacturer_count : 리뷰내 제조사명 직접언급 횟수  
 product_count : 리뷰내 제품명 직접언급 횟수  
+
+## data 설명
+category.csv : 각 카테고리별 데이터 정리 csv
+full_review.csv : 모든 review data 정리 csv
+filtered_notext_review.csv : 리뷰내용 없는 리뷰 filtering 후 csv
