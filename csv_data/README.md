@@ -14,6 +14,6 @@ manufacturer_count : 리뷰내 제조사명 직접언급 횟수
 product_count : 리뷰내 제품명 직접언급 횟수  
 
 ## data 설명
-category.csv : 각 카테고리별 데이터 정리 csv
-full_review.csv : 모든 review data 정리 csv
+category.csv : 각 카테고리별 데이터 정리 csv  
+full_review.csv : 모든 review data 정리 csv  
 filtered_notext_review.csv : 리뷰내용 없는 리뷰 filtering 후 csv
