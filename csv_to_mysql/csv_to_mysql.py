@@ -4,18 +4,18 @@ import pandas as pd
 import os
 import re
 
-csv_list_tmp = os.listdir('./csv_data/')
+csv_list_tmp = os.listdir('../csv_data/')
 csv_list = [csv_file for csv_file in csv_list_tmp if re.search(
     '\.csv$', csv_file) != None]
 
 
 for csv_filename in csv_list:
-    csv_data = pd.read_csv(f'./csv_data/{csv_filename}')
+    csv_data = pd.read_csv(f'../csv_data/{csv_filename}')
     csv_data.rename(columns={'Unnamed: 0': 'review_index'}, inplace=True)
 
     conn = pymysql.connect(host='localhost',
-                           user='유저이름',
-                           password='비밀번호',
+                           user='lyunj',
+                           password='Dldbswo77@',
                            db='coupang_review',  # coupang_review 스키마 생성 필요
                            charset='utf8',
                            cursorclass=pymysql.cursors.DictCursor)
