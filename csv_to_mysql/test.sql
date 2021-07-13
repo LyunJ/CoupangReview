@@ -1,8 +1,25 @@
-select review_rating, avg((if(special_char_count = 0,1,special_char_count) * if(manufacturer_count = 0,1,manufacturer_count) * if(product_count = 0,1,product_count)) / if(review_len = 0, 1, review_len)) as c1
+select review_rating, avg((if(special_char_count = 0,1,special_char_count) * if(manufacturer_count = 0,1,manufacturer_count) * if(product_count = 0,1,product_count)) / if(review_len = 0, 1, review_len)) as c1,avg(review_score) 
 from review_analyzing_data 
-where product_count >= 1 and review_len <> 0
+where product_count >= 1 and review_len <> 0 and not isnull(review_score)
 group by review_rating
 order by review_rating desc;
+
+select review_rating, (if(special_char_count = 0,1,special_char_count) * if(manufacturer_count = 0,1,manufacturer_count) * if(product_count = 0,1,product_count)) / if(review_len = 0, 1, review_len) as c1, review_score
+from review_analyzing_data a left outer join review_content b on (
+a.product_review_index = b.product_review_index and
+a.product_index = b.product_index and
+a.category_index = b.category_index
+)
+where review_len <> 0
+having c1 > 2;
+
+select a.review_date as review_date,a.review_rating as review_rating ,a.newline_count as newline_count,a.review_len as review_len,a.special_char_count as special_char_count ,a.manufacturer_count as manufacturer_count,a.product_count as product_count,b.review_content as review_content
+from review_analyzing_data a left outer join review_content b on (
+a.product_review_index = b.product_review_index and
+a.product_index = b.product_index and
+a.category_index = b.category_index
+)
+where review_len <> 0;
 
 select a.*, max(a.review_date), min(a.review_date), (max(a.review_date) - min(a.review_date)) / (review_count_in_same_review * 100) as result
 from (select a.category_index,a.product_index,a.review_writer_name,b.review_date,count(*) over (partition by a.review_writer_name,a.product_index) as review_count_in_same_review
@@ -79,4 +96,30 @@ flush privileges;
 
 show variables like 'port';
 
-select rating,review_content from csv_save where (rating =1 or rating=5) and review_len <> 0
+select rating,review_content from csv_save where (rating =1 or rating=5) and review_len <> 0;
+
+alter table review_analyzing_data add review_score int null;
+
+
+select count(*)
+from(
+select a.*,(if(special_char_count = 0,1,special_char_count) * if(manufacturer_count = 0,1,manufacturer_count) * if(product_count = 0,1,product_count)) / if(review_len = 0, 1, review_len) as c1
+ from review_analyzing_data a left outer join review_content b on (
+a.product_review_index = b.product_review_index and
+a.product_index = b.product_index and
+a.category_index = b.category_index
+)  
+where review_score = 99 and review_rating = 5
+having c1 > 5) as a
+;
+
+select *,(pow(if(special_char_count = 0,1,special_char_count),2) + pow(if(manufacturer_count = 0,1,manufacturer_count),2) + pow(if(product_count = 0,1,product_count),2)) / if(review_len = 0, 1, review_len) as c1
+ from review_analyzing_data a left outer join review_content b on (
+a.product_review_index = b.product_review_index and
+a.product_index = b.product_index and
+a.category_index = b.category_index
+)  
+where (review_score between 90 and 99) and review_rating = 5
+having c1>1;
+
+select count(*) from csv_save where review_len <> 0;

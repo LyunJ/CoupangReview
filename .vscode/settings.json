@@ -1,3 +1,4 @@
 {
-  "python.pythonPath": "C:\\Users\\tedle\\anaconda3\\envs\\reviewProject\\python.exe"
+  "python.pythonPath": "C:\\Users\\tedle\\anaconda3\\envs\\reviewProject\\python.exe",
+  "jupyter.jupyterServerType": "remote"
 }
