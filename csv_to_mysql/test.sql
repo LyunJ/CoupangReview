@@ -69,7 +69,7 @@ select review_rating, count(*) from review_analyzing_data where review_len <> 0 
 
 select dayofweek(review_date) as day, count(*) from review_analyzing_data where review_len <> 0 group by day;
 
-select * from review_analyzing_data where review_len <> 0;
+select count(*) from review_analyzing_data;
 
 SELECT group_concat(`COLUMN_NAME`)
 FROM `INFORMATION_SCHEMA`.`COLUMNS` 
@@ -122,4 +122,20 @@ a.category_index = b.category_index
 where (review_score between 90 and 99) and review_rating = 5
 having c1>1;
 
-select count(*) from csv_save where review_len <> 0;
+select avg(review_len) from review_analyzing_data where review_len <> 0 and review_rating = 5;
+
+select * 
+from product_review a 
+left outer join review_content b 
+on a.product_review_index = b.product_review_index 
+and a.product_index = b.product_index
+and a.category_index = b.category_index;
+
+select * from review_content where product_review_index = 1226 and product_index = 42617 and category_index = 42619;
+
+Select COUNT(*)
+from review_analyzing_data a left outer join review_content b on (
+a.product_review_index = b.product_review_index and
+a.product_index = b.product_index and
+a.category_index = b.category_index
+)	

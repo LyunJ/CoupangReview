@@ -4,11 +4,11 @@ import pandas as pd
 import os
 import re
 
-csv_list_tmp = os.listdir('../csv_data/')
-csv_list = [csv_file for csv_file in csv_list_tmp if re.search(
-    '\.csv$', csv_file) != None]
+# csv_list_tmp = os.listdir('../csv_data/')
+# csv_list = [csv_file for csv_file in csv_list_tmp if re.search(
+#     '\.csv$', csv_file) != None]
 
-
+csv_list = ['filtered_notext_review.csv']
 for csv_filename in csv_list:
     csv_data = pd.read_csv(f'../csv_data/{csv_filename}')
     csv_data.rename(columns={'Unnamed: 0': 'review_index'}, inplace=True)
@@ -33,7 +33,7 @@ for csv_filename in csv_list:
                 sql_rows.append(sql_row)
 
                 # 10000개가 채워졌을 경우 db에 한번에 업로드
-                if len(sql_rows) >= 10000:
+                if len(sql_rows) >= 5000:
                     sql = "INSERT INTO csv_save(review_index, category, manufacturer, product, writer_name, review_date, rating, review_content, newline_count, review_len, special_char_count, manufacturer_count, product_count) VALUES " + \
                         ",".join(sql_rows)
                     curs.execute(sql)
@@ -45,7 +45,6 @@ for csv_filename in csv_list:
                     ",".join(sql_rows)
                 curs.execute(sql)
                 conn.commit()
-    except:
-        continue
+
     finally:
         conn.close()
