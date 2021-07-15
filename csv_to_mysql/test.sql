@@ -133,9 +133,13 @@ and a.category_index = b.category_index;
 
 select * from review_content where product_review_index = 1226 and product_index = 42617 and category_index = 42619;
 
+select count(*) from review_analyzing_data;
+
 Select COUNT(*)
 from review_analyzing_data a left outer join review_content b on (
 a.product_review_index = b.product_review_index and
 a.product_index = b.product_index and
 a.category_index = b.category_index
-)	
+)	;
+use coupang_review;
+select * from review_content where product_review_index = 150826;
