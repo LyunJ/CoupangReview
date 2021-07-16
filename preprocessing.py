@@ -31,11 +31,10 @@ def preprocessing_df(df):
 # cat_list = ['패션의류잡화', '뷰티', '출산유아동', '식품', '주방용품', '생활용품', '홈인테리어',
 #            '가전디지털', '스포츠레저', '자동차용품', '도서음반DVD', '완구취미', '문구오피스', '반려동물용품', '헬스건강식품']
 
-cat_list = ['주방용품', '생활용품', '홈인테리어',
-            '가전디지털', '스포츠레저', '자동차용품', '도서음반DVD', '완구취미']
+cat_list = ['11stReview']
 
 for i in cat_list:
-    path = './data/' + i
+    path = './json_data/' + i
     file_list = os.listdir(path)
     df_list = []
     for j in file_list:
@@ -50,4 +49,4 @@ for i in cat_list:
         preprocessing_df(df)
 
     df = pd.concat(df_list, ignore_index=True)
-    df.to_csv('./data/csv_data/' + i + '.csv')
+    df.to_csv('./csv_data/' + i + '.csv')
